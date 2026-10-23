@@ -47,7 +47,7 @@ public class MoveLearningBubble extends iw_1 {
                 this.vj[i].pw0(true);
                 vk0_1 vk0_1Var = ec0_2.Sx().SX(s2);
                 this.vj[i].Xr0(s2_0.tq0(vk0_1Var, vu));
-                this.vj[i].Pc(lb0_2.fb0(vk0_1Var));
+                // Android's compact five-choice bubble must not paint the\n                // power/accuracy summary in the same 150px row as the move name.\n                // Detail text is available in the full move description UI.\n                this.vj[i].Pc(tw0_0.kz0() ? "" : lb0_2.fb0(vk0_1Var));
                 this.vj[i].SU(vk0_1Var.CoM2());
                 byte bIdx = (byte) i;
                 this.vj[i].RR(() -> this.m80(bIdx));
@@ -64,15 +64,31 @@ public class MoveLearningBubble extends iw_1 {
         hh0_1Var.uf("battle-button-return");
         this.z30.RR(this::K30);
 
-        this.tE0.x40(this.tE0.H10().Xq(new ya_1[]{
-                this.tE0.lo0().LPt3(new le0_2[]{this.vj[0], this.vj[1], this.vj[4]}),
-                this.tE0.lo0().LPt3(new le0_2[]{this.vj[2], this.vj[3]})
-        }));
-        this.tE0.WQ(this.tE0.H10().Xq(new ya_1[]{
-                this.tE0.lo0().LPt3(new le0_2[]{this.vj[0], this.vj[2]}),
-                this.tE0.lo0().LPt3(new le0_2[]{this.vj[1], this.vj[3]}),
-                this.tE0.lo0().LPt3(new le0_2[]{this.vj[4]})
-        }));
+        if (tw0_0.kz0()) {
+            // Mobile: the navigation logic already uses TWO columns (P0=2).
+            // Use the same grid in the actual dialog layout: 2+2+1, not
+            // the old three-across fixed-width desktop arrangement.
+            this.tE0.x40(this.tE0.H10().Xq(new ya_1[]{
+                    this.tE0.lo0().LPt3(new le0_2[]{this.vj[0], this.vj[1]}),
+                    this.tE0.lo0().LPt3(new le0_2[]{this.vj[2], this.vj[3]}),
+                    this.tE0.lo0().LPt3(new le0_2[]{this.vj[4]})
+            }));
+            this.tE0.WQ(this.tE0.H10().Xq(new ya_1[]{
+                    this.tE0.lo0().LPt3(new le0_2[]{this.vj[0], this.vj[2], this.vj[4]}),
+                    this.tE0.lo0().LPt3(new le0_2[]{this.vj[1], this.vj[3]})
+            }));
+        } else {
+            // Preserve the pre-existing desktop arrangement.
+            this.tE0.x40(this.tE0.H10().Xq(new ya_1[]{
+                    this.tE0.lo0().LPt3(new le0_2[]{this.vj[0], this.vj[1], this.vj[4]}),
+                    this.tE0.lo0().LPt3(new le0_2[]{this.vj[2], this.vj[3]})
+            }));
+            this.tE0.WQ(this.tE0.H10().Xq(new ya_1[]{
+                    this.tE0.lo0().LPt3(new le0_2[]{this.vj[0], this.vj[2]}),
+                    this.tE0.lo0().LPt3(new le0_2[]{this.vj[1], this.vj[3]}),
+                    this.tE0.lo0().LPt3(new le0_2[]{this.vj[4]})
+            }));
+        }
         SL(this.tE0);
         SL(this.z30);
     }
@@ -148,10 +164,20 @@ public class MoveLearningBubble extends iw_1 {
 
     @Override
     public void K8() {
-        this.tE0.oY(800, 115);
-        int y = (tw0_0.LD0.Hv0() - 500) / 4;
-        int x = (tw0_0.LD0.ew0() / 2 - 400) + 350;
-        this.tE0.E40(x, y);
+        if (tw0_0.kz0()) {
+            // Three rows require real vertical space on Android. Centering
+            // prevents the dialog from drawing under the game overlay HUD.
+            int width = Math.min(800, tw0_0.LD0.ew0());
+            int height = 216;
+            this.tE0.oY(width, height);
+            this.tE0.E40((tw0_0.LD0.ew0() - width) / 2,
+                    Math.max(0, (tw0_0.LD0.Hv0() - height) / 2));
+        } else {
+            this.tE0.oY(800, 115);
+            int y = (tw0_0.LD0.Hv0() - 500) / 4;
+            int x = (tw0_0.LD0.ew0() / 2 - 400) + 350;
+            this.tE0.E40(x, y);
+        }
         this.z30.lt0();
         this.z30.RY(128, 24);
         this.z30.E40(this.tE0.cz() - this.z30.Mx, this.tE0.VM() - this.z30.OB);
