@@ -47,7 +47,10 @@ public class MoveLearningBubble extends iw_1 {
                 this.vj[i].pw0(true);
                 vk0_1 vk0_1Var = ec0_2.Sx().SX(s2);
                 this.vj[i].Xr0(s2_0.tq0(vk0_1Var, vu));
-                // Android's compact five-choice bubble must not paint the\n                // power/accuracy summary in the same 150px row as the move name.\n                // Detail text is available in the full move description UI.\n                this.vj[i].Pc(tw0_0.kz0() ? "" : lb0_2.fb0(vk0_1Var));
+                // Android's compact five-choice bubble must not paint the
+                // power/accuracy summary in the same 150px row as the move name.
+                // Detail text is available in the full move description UI.
+                this.vj[i].Pc(tw0_0.kz0() ? "" : lb0_2.fb0(vk0_1Var));
                 this.vj[i].SU(vk0_1Var.CoM2());
                 byte bIdx = (byte) i;
                 this.vj[i].RR(() -> this.m80(bIdx));
